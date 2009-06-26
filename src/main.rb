@@ -10,12 +10,15 @@ if File.exist? File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', '
     $CLASSPATH << jar
   end
 end
+%w{behaviors game_objects input_helpers input_mappings states}.each do |dir|
+  $LOAD_PATH << "src/#{dir}"
+end
 
 require 'gemini'
 
 begin
   # Change :HelloState to point to the initial state of your game
-  Gemini::Main.start_app("", 800, 600, :HelloWorldState, false)
+  Gemini::Main.start_app("", 800, 600, :MainState, false)
 rescue => e
   warn e
   warn e.backtrace

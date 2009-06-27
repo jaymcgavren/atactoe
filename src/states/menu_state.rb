@@ -12,11 +12,12 @@ class MenuState < Gemini::BaseState
     
     create :Background, "grid.png"
     
-    create :Text, screen_width / 2, screen_height * 0.33, "AtacToe"
+    create :Text, screen_width / 2, screen_height * 0.33, "ATacToe"
+    create :Text, screen_width / 2, screen_height * 0.36, "by Jay McGavren"
     
     @target_score_text = create(:Text,
       screen_width * 0.25,
-      screen_height * 0.25, 
+      screen_height * 0.27,
       target_score_string
     )
     create :Text, screen_width * 0.25, screen_height * 0.30, "Up/Down to change target score"

@@ -41,7 +41,7 @@ class MenuState < Gemini::BaseState
   end
   
   def target_score_string
-    "Press A: Start a #{@target_score}-point match"
+    "Press Draw button to start a #{@target_score}-point match"
   end
   
 end

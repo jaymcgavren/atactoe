@@ -3,3 +3,4 @@ coverage.data
 coverage/*
 log/*
 tmp/*
+package/*

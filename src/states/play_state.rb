@@ -36,10 +36,16 @@ class PlayState < Gemini::BaseState
     game_end_checker.on_update do
       next if @switching_state
       winning_mark = winner
-      next unless winning_mark
-      @switching_state = true
-      increment_score(winning_mark)
-      switch_state :GameWonState, @target_score, @score_x, @score_o, winning_mark
+      if winning_mark
+        increment_score(winning_mark)
+        @switching_state = true
+        switch_state :GameWonState, @target_score, @score_x, @score_o, winning_mark
+      elsif tie?
+        @switching_state = true
+        switch_state :TiedState, @target_score, @score_x, @score_o
+      else
+        next
+      end
     end
 
     after_warmup = create :GameObject, :Timeable
@@ -57,11 +63,13 @@ class PlayState < Gemini::BaseState
       screen_height * 0.1, 
       "X: #{@score_x}"
     )
+    @score_text_x.size = 60
     @score_text_o = create(:Text,
       screen_width * 0.9,
       screen_height * 0.1, 
       "O: #{@score_o}"
     )
+    @score_text_o.size = 60
     
     @grid = Hash.new{|h,k| h[k] = Hash.new}
     
@@ -87,6 +95,12 @@ class PlayState < Gemini::BaseState
       end
       return nil
     end
+    
+    def tie?
+      @grid[-1][-1] and @grid[-1][ 0] and @grid[-1][ 1] and
+      @grid[ 0][-1] and @grid[ 0][ 0] and @grid[ 0][ 1] and
+      @grid[ 1][-1] and @grid[ 1][ 0] and @grid[ 1][ 1]
+    end
 
     def increment_score(winning_mark)
       case winning_mark
@@ -95,7 +109,7 @@ class PlayState < Gemini::BaseState
         @score_text_x.text = "X: #{@score_x}"
       when :o
         @score_o += 1
-        @score_text_o.text = "o: #{@score_o}"
+        @score_text_o.text = "O: #{@score_o}"
       end
     end
     

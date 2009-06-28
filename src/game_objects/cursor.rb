@@ -9,6 +9,7 @@ class Cursor < Gemini::GameObject
   def load(player)
     self.player_id = player
     set_image game_state.manager(:render).get_cached_image(mark == :x ? :x_cursor : :o_cursor)
+    image_scaling 1.5
     self.grid_x = self.grid_y = 0
     
     @screen_center_x = game_state.screen_width / 2
@@ -45,7 +46,7 @@ private
     if game_state.grid[@grid_x][@grid_y].nil?
       new_mark = game_state.create :Mark, mark
       new_mark.move(self.x, self.y)
-      game_state.grid[@grid_x][@grid_y] = mark
+      game_state.grid[@grid_x][@grid_y] = new_mark
       game_state.manager(:sound).play_sound :draw
     else
       game_state.manager(:sound).play_sound :no

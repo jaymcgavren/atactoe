@@ -35,11 +35,12 @@ class PlayState < Gemini::BaseState
     end
     game_end_checker.on_update do
       next if @switching_state
-      winning_mark = winner
-      if winning_mark
-        increment_score(winning_mark)
+      marks = winning_marks
+      if marks
         @switching_state = true
-        switch_state :GameWonState, @target_score, @score_x, @score_o, winning_mark
+        increment_score(marks.first.shape)
+        show_winner(marks)
+        switch_state :GameWonState, @target_score, @score_x, @score_o, marks.first.shape
       elsif tie?
         @switching_state = true
         switch_state :TiedState, @target_score, @score_x, @score_o
@@ -77,7 +78,7 @@ class PlayState < Gemini::BaseState
   
   private
   
-    def winner
+    def winning_marks
       [
         #Compare columns.
         [@grid[-1][-1], @grid[-1][ 0], @grid[-1][ 1]],
@@ -91,7 +92,11 @@ class PlayState < Gemini::BaseState
         [@grid[-1][-1], @grid[ 0][ 0], @grid[ 1][ 1]],
         [@grid[-1][ 1], @grid[ 0][ 0], @grid[ 1][-1]],
       ].each do |squares|
-        return squares[0] if squares[0] and squares[0] == squares[1] and squares[1] == squares[2]
+        if squares[0] and squares[1] and squares[2]
+          if squares[0].shape == squares[1].shape and squares[1].shape == squares[2].shape
+            return squares
+          end
+        end
       end
       return nil
     end
@@ -116,6 +121,12 @@ class PlayState < Gemini::BaseState
     def display_match_winner(winner)
       end_match_text.on_countdown_complete do
         switch_state :MenuState, @target_score
+      end
+    end
+    
+    def show_winner(marks)
+      marks.each do |mark|
+        mark.image = manager(:render).get_cached_image(mark.shape == :x ? :x_match : :o_match)
       end
     end
     

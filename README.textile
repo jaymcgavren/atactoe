@@ -1,0 +1,26 @@
+!http://clients.fudgestudios.com/chester.jpg!
+
+h1. ATacToe
+
+A "real-time" Tic-Tac-Toe game, meaning both players move at the same time.  Block your opponent before they can complete a line, then go for the win yourself.  First to win 10 games wins the match!
+
+h1. How to Run
+
+Just grab the application for your platform (Windows or OS X), decompress, double-click, and play!  As long as you have Java installed, it should work out of the box.
+
+h1. Controls
+
+* Player 1
+* * A/S/D/W - move cursor
+* * Left-Shift - place mark
+* Player 2
+* * I/J/K/L - move cursor
+* * Space - place mark
+* Other
+* Escape - exit
+
+Or plug in a gamepad and use the D-pad and buttons.  XBox 360 controllers are officially supported for now, with more to come.
+
+h1. Legal
+
+Copyright 2009 "Jay McGavren":http://jay.mcgavren.com.  Released under the MIT License.  See LICENSE.txt for details.

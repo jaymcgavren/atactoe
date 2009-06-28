@@ -22,6 +22,8 @@ configuration do |c|
   c.jars[:data] = { :directory => 'data', :location_in_jar => 'data', :exclude => /bak/}
   c.jvm_arguments = "-XX:+UseConcMarkSweepGC -Djruby.compile.mode=FORCE -Xms256m -Xmx512m"
   c.java_library_path = "lib/java/native_files"
+  
+  c.mac_icon_path = 'data/icon.icns'
 
   # Bundler options
   # c.do_not_generate_plist = false

@@ -1,4 +1,4 @@
-!screenshot.jpg!
+!http://github.com/jaymcgavren/atactoe/raw/master/screenshot.jpg!
 
 h1. ATacToe
 
@@ -17,7 +17,7 @@ h1. Controls
 ** I/J/K/L - move cursor
 ** Space - place mark
 * Other
-* Escape - exit
+** Escape - exit
 
 Or plug in a gamepad and use the D-pad and buttons.  XBox 360 controllers are officially supported for now, with more to come.
 

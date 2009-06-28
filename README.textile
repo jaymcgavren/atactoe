@@ -1,4 +1,4 @@
-!http://clients.fudgestudios.com/chester.jpg!
+!screenshot.jpg!
 
 h1. ATacToe
 
@@ -11,11 +11,11 @@ Just grab the application for your platform (Windows or OS X), decompress, doubl
 h1. Controls
 
 * Player 1
-* * A/S/D/W - move cursor
-* * Left-Shift - place mark
+** A/S/D/W - move cursor
+** Left-Shift - place mark
 * Player 2
-* * I/J/K/L - move cursor
-* * Space - place mark
+** I/J/K/L - move cursor
+** Space - place mark
 * Other
 * Escape - exit
 

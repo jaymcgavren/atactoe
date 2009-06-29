@@ -24,6 +24,7 @@ configuration do |c|
   c.java_library_path = "lib/java/native_files"
   
   c.mac_icon_path = 'data/icon.icns'
+  # c.windows_icon_path = 'data/icon.ico'
 
   # Bundler options
   # c.do_not_generate_plist = false

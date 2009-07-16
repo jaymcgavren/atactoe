@@ -5,6 +5,9 @@ class Cursor < Gemini::GameObject
 
   attr_accessor :player_id
   attr_accessor :grid_x, :grid_y
+  attr_accessor :locked
+  
+  DRAW_LOCK_DURATION = 0.20
   
   def load(player)
     self.player_id = player
@@ -12,6 +15,8 @@ class Cursor < Gemini::GameObject
     image_scaling 1.5
     self.grid_x = self.grid_y = 0
     
+    @locked = false
+
     @screen_center_x = game_state.screen_width / 2
     @screen_center_y = game_state.screen_height / 2
     self.x = @screen_center_x
@@ -23,6 +28,10 @@ class Cursor < Gemini::GameObject
     
     on_update do |delta|
       update_image
+    end
+    
+    on_countdown_complete do |name|
+      @locked = false
     end
     
   end
@@ -43,7 +52,10 @@ private
 
   def draw_mark(message)
     return unless player_id == message.player
+    return if @locked
     if game_state.grid[@grid_x][@grid_y].nil?
+      @locked = true
+      add_countdown :lock, DRAW_LOCK_DURATION, 0.03
       new_mark = game_state.create :Mark, mark
       new_mark.move(self.x, self.y)
       game_state.grid[@grid_x][@grid_y] = new_mark

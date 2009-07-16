@@ -7,11 +7,11 @@ $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
 if File.exist? File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'java'))
   jar_glob = File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'java', '*.jar'))
   Dir.glob(jar_glob).each do |jar|
-    $CLASSPATH << jar
+    $CLASSPATH << File.expand_path(jar)
   end
 end
 %w{behaviors game_objects input_helpers input_mappings states}.each do |dir|
-  $LOAD_PATH << "src/#{dir}"
+  $LOAD_PATH << File.expand_path("src/#{dir}")
 end
 
 require 'gemini'

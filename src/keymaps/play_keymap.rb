@@ -7,6 +7,7 @@ Gemini::InputManager.define_keymap do |i|
     i.map_joystick :joystick_id => j, :released => XBOX_360_B, :draw_mark => nil, :player => j
     i.map_joystick :joystick_id => j, :released => XBOX_360_X, :draw_mark => nil, :player => j
     i.map_joystick :joystick_id => j, :released => XBOX_360_Y, :draw_mark => nil, :player => j
+    i.map_joystick :joystick_id => j, :released => XBOX_360_BACK, :quit => nil, :player => j
     i.map_joystick :joystick_id => j, :axis_update => XBOX_360_LEFT_X_AXIS, :change_x => nil, :player => j do |message, raw_input|
       if message.value < -0.5
         message.value = -1
@@ -25,31 +26,33 @@ Gemini::InputManager.define_keymap do |i|
         message.value = 0
       end
     end
-    i.map_joystick :joystick_id => j, :held => XBOX_360_DPAD_UP, :change_y => nil, :player => j do |message, raw_input|
-      message.value = -1
+    #XBox D-pad mapped as buttons only on OSX.
+    if Platform.using_osx?
+      i.map_joystick :joystick_id => j, :held => XBOX_360_DPAD_UP, :change_y => nil, :player => j do |message, raw_input|
+        message.value = -1
+      end
+      i.map_joystick :joystick_id => j, :released => XBOX_360_DPAD_UP, :change_y => nil, :player => j do |message, raw_input|
+        message.value = 0
+      end
+      i.map_joystick :joystick_id => j, :held => XBOX_360_DPAD_DOWN, :change_y => nil, :player => j do |message, raw_input|
+        message.value = 1
+      end
+      i.map_joystick :joystick_id => j, :released => XBOX_360_DPAD_DOWN, :change_y => nil, :player => j do |message, raw_input|
+        message.value = 0
+      end
+      i.map_joystick :joystick_id => j, :held => XBOX_360_DPAD_LEFT, :change_x => nil, :player => j do |message, raw_input|
+        message.value = -1
+      end
+      i.map_joystick :joystick_id => j, :released => XBOX_360_DPAD_LEFT, :change_x => nil, :player => j do |message, raw_input|
+        message.value = 0
+      end
+      i.map_joystick :joystick_id => j, :held => XBOX_360_DPAD_RIGHT, :change_x => nil, :player => j do |message, raw_input|
+        message.value = 1
+      end
+      i.map_joystick :joystick_id => j, :released => XBOX_360_DPAD_RIGHT, :change_x => nil, :player => j do |message, raw_input|
+        message.value = 0
+      end
     end
-    i.map_joystick :joystick_id => j, :released => XBOX_360_DPAD_UP, :change_y => nil, :player => j do |message, raw_input|
-      message.value = 0
-    end
-    i.map_joystick :joystick_id => j, :held => XBOX_360_DPAD_DOWN, :change_y => nil, :player => j do |message, raw_input|
-      message.value = 1
-    end
-    i.map_joystick :joystick_id => j, :released => XBOX_360_DPAD_DOWN, :change_y => nil, :player => j do |message, raw_input|
-      message.value = 0
-    end
-    i.map_joystick :joystick_id => j, :held => XBOX_360_DPAD_LEFT, :change_x => nil, :player => j do |message, raw_input|
-      message.value = -1
-    end
-    i.map_joystick :joystick_id => j, :released => XBOX_360_DPAD_LEFT, :change_x => nil, :player => j do |message, raw_input|
-      message.value = 0
-    end
-    i.map_joystick :joystick_id => j, :held => XBOX_360_DPAD_RIGHT, :change_x => nil, :player => j do |message, raw_input|
-      message.value = 1
-    end
-    i.map_joystick :joystick_id => j, :released => XBOX_360_DPAD_RIGHT, :change_x => nil, :player => j do |message, raw_input|
-      message.value = 0
-    end
-    i.map_joystick :joystick_id => j, :released => XBOX_360_BACK, :quit => nil, :player => j
   end
 
   # ########################################

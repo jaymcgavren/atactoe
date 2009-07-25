@@ -22,28 +22,25 @@ class PlayState < Gemini::BaseState
 
     manager(:sound).add_sound :draw, "draw.wav"
     manager(:sound).add_sound :no, "no.wav"
+    manager(:sound).add_sound :win, "woo-hoo.wav"
+    manager(:sound).add_sound :tie, "huh.wav"
 
     load_keymap :PlayKeymap
 
     create :Background, "grid.png"
-    
-    # manager(:sound).loop_song "j-hop.ogg", :volume => 0.6
     
     game_end_checker = create :GameObject, :Updates, :ReceivesEvents
     game_end_checker.handle_event :quit do
       switch_state :MenuState, target_score
     end
     game_end_checker.on_update do
-      next if @switching_state
       marks = winning_marks
       if marks
-        @switching_state = true
         increment_score(marks.first.shape)
         show_winner(marks)
-        switch_state :GameWonState, @target_score, @score_x, @score_o, marks.first.shape
+        game_won(marks.first.shape)
       elsif tie?
-        @switching_state = true
-        switch_state :TiedState, @target_score, @score_x, @score_o
+        game_tied
       else
         next
       end
@@ -127,6 +124,37 @@ class PlayState < Gemini::BaseState
     def show_winner(marks)
       marks.each do |mark|
         mark.image = manager(:render).get_cached_image(mark.shape == :x ? :x_match : :o_match)
+      end
+    end
+    
+    def game_won(winner)
+      manager(:sound).play_sound :win
+      if @score_x < @target_score and @score_o < @target_score
+        reset_grid
+      else
+        switch_state :MatchWonState, @target_score, winner
+      end
+    end
+    
+    def game_tied
+      manager(:sound).play_sound :tie
+      reset_grid
+    end
+    
+    def reset_grid
+      @grid.keys.each do |row|
+        @grid[row].keys.each do |column|
+          mark = @grid[row][column]
+          next unless mark
+          @grid[row][column] = nil
+          mark.add_countdown :fade_timer, 0.5, 0.03
+          mark.on_countdown_complete do
+            remove mark
+          end
+          mark.on_timer_tick do |timer|
+            mark.color.transparency = timer.percent_complete
+          end
+        end
       end
     end
     

@@ -57,15 +57,15 @@ class PlayState < Gemini::BaseState
     end
     
     @score_text_x = create(:Text,
-      screen_width * 0.1,
-      screen_height * 0.1, 
-      "X: #{@score_x}"
+      "X: #{@score_x}",
+      :position => Vector.new(screen_width * 0.1, screen_height * 0.1),
+      :justification => :center
     )
     @score_text_x.size = 60
     @score_text_o = create(:Text,
-      screen_width * 0.9,
-      screen_height * 0.1, 
-      "O: #{@score_o}"
+      "O: #{@score_o}",
+      :position => Vector.new(screen_width * 0.9, screen_height * 0.1),
+      :justification => :center
     )
     @score_text_o.size = 60
     

@@ -12,15 +12,15 @@ class MenuState < Gemini::BaseState
     
     create :Background, "grid.png"
     
-    create :Text, screen_width / 2, screen_height * 0.33, "ATacToe"
-    create :Text, screen_width / 2, screen_height * 0.36, "by Jay McGavren"
+    create :Text, "ATacToe", :position => Vector.new(screen_width / 2, screen_height * 0.33), :justification => :center
+    create :Text, "by Jay McGavren", :position => Vector.new(screen_width / 2, screen_height * 0.36), :justification => :center
     
     @target_score_text = create(:Text,
-      screen_width * 0.25,
-      screen_height * 0.27,
-      target_score_string
+      target_score_string,
+      :position => Vector.new(screen_width * 0.25, screen_height * 0.27),
+      :justification => :center
     )
-    create :Text, screen_width * 0.25, screen_height * 0.30, "Up/Down to change target score"
+    create :Text, "Up/Down to change target score", :position => Vector.new(screen_width * 0.25, screen_height * 0.30), :justification => :center
 
     menu_handler = create :GameObject, :ReceivesEvents
     menu_handler.handle_event :change_target_score do |message|
